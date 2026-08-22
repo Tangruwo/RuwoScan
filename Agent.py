@@ -44,24 +44,29 @@ class Agent: # 智能体基类
         # 使用tooL
         toolCalls = response.choices[0].message.tool_calls
         if toolCalls:
+            toolReturns = ""
             for toolCall in toolCalls:
-                saveLog(path=path,diaName="TOOL",Content=executeTool(toolCall=toolCall))
-
-        if response.choices[0].message.content: # 没调用直接返回
-            return response.choices[0].message.content
-        
-        else: # 调用了tool,重新思考一次
+                toolReturn = executeTool(toolCall=toolCall)
+                toolReturns += str(toolReturn)
+                saveLog(path=path,diaName="TOOL",Content=toolReturn)
+            # 第二次思考,总结调用结果
             response = self.client.chat.completions.create(
                 model = config["model"],
                 messages = [
                     {"role": "system", "content": self.prompt}
                 ] + self.memory + [
-                    {"role": "user", "content": "这是工具结果..."}
+                    {"role": "user", "content": "这是工具结果,请进行总结分析:"}
+                ] + [
+                    {"role": "user", "content": toolReturns}
                 ],
                 stream=False,
                 reasoning_effort="high",
                 extra_body={"thinking": {"type": "enabled"}}
             )
+            saveLog(path=path, diaName=self.name, Content=response.choices[0].message.content)
+
+        if response.choices[0].message.content: # 没调用tool直接返回结果
+            return response.choices[0].message.content
             
 
     def clearMemory():
