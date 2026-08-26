@@ -29,11 +29,9 @@ class Agent: # 智能体基类
             messages = [
                 {"role": "system", "content": self.prompt}
             ] + self.memory + [
-                {"role": diaName, "content": diaContent}
+                {"role": "user", "content": diaContent}
             ],
             stream=False,
-            reasoning_effort="high",
-            extra_body={"thinking": {"type": "enabled"}},
             tools=tools
         )
 
@@ -60,8 +58,6 @@ class Agent: # 智能体基类
                     {"role": "user", "content": toolReturns}
                 ],
                 stream=False,
-                reasoning_effort="high",
-                extra_body={"thinking": {"type": "enabled"}}
             )
             saveLog(path=path, diaName=self.name, Content=response.choices[0].message.content)
 

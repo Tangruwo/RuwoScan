@@ -19,7 +19,17 @@ def getLog(path): # 读取日志
         with open(path,"r",encoding="utf-8") as log:
             for line in log:
                 if line.strip():
-                    data.append(json.loads(line))
+                    entry = json.loads(line)
+                    content = entry.get("content")
+
+                    if content is None:
+                        content = ""
+                    elif isinstance(content, dict):
+                        content = json.dumps(content, ensure_ascii=False)
+                    elif not isinstance(content, str):
+                        content = str(content)
+                        
+                    data.append({"role": "user", "content": content})
         return data
     except Exception as e:
         print(">> Error: getLog error",e)
@@ -51,9 +61,10 @@ def getConfig(): # 从config文件中获取配置文件
 
     except: # 呜呜太可恶了竟然乱删我的东西(17.14好了现在不上传啦)
         with open("config.json","w",encoding="utf-8") as f: # 复制还能水一点代码,酣畅淋漓
-            apiKey = input(">>Error: no apiKey,plase: ")
-            bashUrl = input(">>Error: no bashUrl,plase: ")
-            model = input(">>Error: no model,plase: ")
+            apiKey = input(">>没有检测到apiKey,请输入: ")
+            bashUrl = input(">>没有检测到bashUrl,请输入: ")
+            model = input(">>没有检测到model,请输入: ")
+            print("文件已储存到config.json,注意保密")
 
             config = {
                 "apiKey": apiKey,
