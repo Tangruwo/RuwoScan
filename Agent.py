@@ -19,7 +19,7 @@ class Agent: # 智能体基类
 
         # saveLog(path="ruwoscan.log",diaName=self.name,Content=self.prompt)
 
-    def think(self,path,diaName,diaContent): # 路径,名,内容
+    def think(self,path,diaName,diaContent) -> str: # 路径,名,内容
         config = getConfig()
 
         self.memory = getLog(path)

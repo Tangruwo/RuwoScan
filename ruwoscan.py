@@ -18,7 +18,7 @@ if __name__ == "__main__":
         base_url = config["bashUrl"]
     )
 
-    userInput = input("ruwoScan>")
+    KingReport = input("ruwoScan>") # 哈哈,这段有点想笑
 
     '''
     垃圾话---
@@ -35,22 +35,27 @@ if __name__ == "__main__":
     Attacker = Agent(name="Attacker",path="prompts/Default/attacker.txt",client=client,memoryLimit=30)
 
     Reporter = Agent(name="Reporter",path="prompts/Default/reporter.txt",client=client,memoryLimit=30)
-    
 
     # 探测资产
-    print("初步探测目标资产...")
-    ReconReport = Recon.think("prompts/ruwoscan.log","user",userInput) # 初步探测
-    KingReport = King.think("prompts/ruwoscan.log","user",ReconReport) # 点明重点
-    print("重点探测目标资产...")
-    ReconReport = Recon.think("prompts/ruwoscan.log","user",KingReport) # 重点探测
+    print("探测资产中...")
+    for i in range(14):
 
+        ReconReport = Recon.think("prompts/ruwoscan.log","assistant",KingReport) # 探测
+        KingReport = King.think("prompts/ruwoscan.log","assistant",ReconReport) # 指明方向
+
+        if "状态:结束" in KingReport:
+            break
+        
     # 渗透测试(气死我了昨天修了这么久bug结果是api的问题www2026.8.26)
     print("渗透测试中...")
-    for i in range(2):
-        AttackerReport = Attacker.think("prompts/ruwoscan.log","user",KingReport)
-        KingReport = King.think("prompts/ruwoscan.log","user",AttackerReport)
+    for i in range(14):
+        AttackerReport = Attacker.think("prompts/ruwoscan.log","assistant",KingReport)
+        KingReport = King.think("prompts/ruwoscan.log","assistant",AttackerReport)
+
+        if "状态:结束" in KingReport:
+            break
 
     # 总结报告
     print("正在为您总结报告www")
-    print(Reporter.think("prompts/ruwoscan.log","user","请总结报告"))
+    print(Reporter.think("prompts/ruwoscan.log","assistant","请总结报告"))
     

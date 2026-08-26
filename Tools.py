@@ -99,28 +99,6 @@ tools = [
             }
         }
     },
-    
-    {
-        "type": "function",
-        "function": {
-            "name": "setRequests",
-            "description": "发送 HTTP 请求，支持 GET/POST/PUT/DELETE,返回状态码、响应头和正文",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "url": {"type": "string", "description": "目标 URL"},
-                    "method": {"type": "string", "description": "HTTP 方法，默认 GET"},
-                    "headers": {"type": "string", "description": "请求头 JSON 字符串，如 '{\"User-Agent\": \"Mozilla/5.0\"}'"},
-                    "data": {"type": "string", "description": "请求体 JSON 字符串"},
-                    "params": {"type": "string", "description": "URL 参数字典 JSON 字符串"},
-                    "timeout": {"type": "integer", "description": "请求超时时间"},
-                    "verify": {"type": "boolean", "description": "是否跳过证书验证,默认Flase不跳过"}
-                },
-                "required": ["url"]
-            }
-        }
-    }
-    
 
 ]
 
