@@ -13,7 +13,6 @@ class Agent: # 智能体基类
         try:
             with open(path,"r",encoding='utf-8') as f:
                 self.prompt = f.read()
-                print(f.read())
         except:
             print(">> Error: Agent no file")
 

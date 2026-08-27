@@ -1,11 +1,11 @@
 # 代码写的很唐谢谢看哈
 
-import os
 from openai import OpenAI
-import json
-import sys
 from File import getConfig,clearFile
 from Agent import Agent
+# rich
+from rich.console import Console
+from rich.panel import Panel
 
 
 if __name__ == "__main__":
@@ -18,7 +18,8 @@ if __name__ == "__main__":
         base_url = config["bashUrl"]
     )
 
-    KingReport = input("ruwoScan>") # 哈哈,这段有点想笑
+    # rich的
+    console = Console()
 
     '''
     垃圾话---
@@ -29,6 +30,9 @@ if __name__ == "__main__":
     好无聊,写README先吧
     '''
 
+    console.print(Panel("[bold cyan]RuwoScan[/] - AI 漏洞扫描工具", subtitle="[i]唐如我[/i]"))
+    KingReport = input("ruwoScan>") # 哈哈,这段有点想笑
+
     # 创建智能体
     King = Agent(name="King",path="prompts/Default/kingResponse.txt",client=client,memoryLimit=30)
     Recon = Agent(name="Recon",path="prompts/Default/recon.txt",client=client,memoryLimit=30)
@@ -37,25 +41,25 @@ if __name__ == "__main__":
     Reporter = Agent(name="Reporter",path="prompts/Default/reporter.txt",client=client,memoryLimit=30)
 
     # 探测资产
-    print("探测资产中...")
+    print("🎯 探测资产中...")
     for i in range(14):
 
-        ReconReport = Recon.think("prompts/ruwoscan.log","assistant",KingReport) # 探测
-        KingReport = King.think("prompts/ruwoscan.log","assistant",ReconReport) # 指明方向
+        ReconReport = Recon.think("prompts/ruwoscan.log","King",KingReport) # 探测 assistant
+        KingReport = King.think("prompts/ruwoscan.log","Recon",ReconReport) # 指明方向
 
-        if "状态:结束" in KingReport:
+        if "切换下一阶段" in KingReport:
             break
         
     # 渗透测试(气死我了昨天修了这么久bug结果是api的问题www2026.8.26)
-    print("渗透测试中...")
+    print("⚔️ 渗透测试中...")
     for i in range(14):
-        AttackerReport = Attacker.think("prompts/ruwoscan.log","assistant",KingReport)
-        KingReport = King.think("prompts/ruwoscan.log","assistant",AttackerReport)
+        AttackerReport = Attacker.think("prompts/ruwoscan.log","King",KingReport)
+        KingReport = King.think("prompts/ruwoscan.log","Attacker",AttackerReport)
 
-        if "状态:结束" in KingReport:
+        if "切换下一阶段" in KingReport:
             break
 
     # 总结报告
-    print("正在为您总结报告www")
+    print("📝 总结报告中")
     print(Reporter.think("prompts/ruwoscan.log","assistant","请总结报告"))
     
