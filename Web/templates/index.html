@@ -5,13 +5,7 @@
     <title>RuwoScan</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        /* ===== 基础重置 ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace;
             background: #0a0c0f;
@@ -22,8 +16,6 @@
             align-items: center;
             padding: 24px;
         }
-
-        /* ===== 主容器 — 玻璃面板 ===== */
         .app {
             max-width: 1100px;
             width: 100%;
@@ -34,32 +26,22 @@
             -webkit-backdrop-filter: blur(18px);
             border-radius: 32px;
             border: 1px solid rgba(255, 255, 255, 0.04);
-            box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.02);
+            box-shadow: 0 25px 60px -12px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.02);
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            transition: all 0.2s ease;
         }
-
-        /* ===== 头部 ===== */
         .header {
             padding: 22px 32px 14px 32px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            border-bottom: 1px solid rgba(255,255,255,0.04);
             flex-shrink: 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
+        .header-left { display: flex; align-items: center; gap: 14px; }
         .logo-icon {
-            width: 32px;
-            height: 32px;
+            width: 32px; height: 32px;
             background: linear-gradient(135deg, #f0883e, #d26b2a);
             border-radius: 8px;
             display: flex;
@@ -68,79 +50,37 @@
             font-weight: 700;
             font-size: 16px;
             color: #0a0c0f;
-            box-shadow: 0 4px 12px rgba(240, 136, 62, 0.25);
+            box-shadow: 0 4px 12px rgba(240,136,62,0.25);
         }
-
         .title {
-            font-size: 18px;
-            font-weight: 500;
-            letter-spacing: -0.3px;
-            background: linear-gradient(135deg, #f0f4fa, #b0c4db);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 18px; font-weight: 500;
+            color: #e8edf2;
         }
-
-        .title span {
-            font-weight: 300;
-            color: #5a6f88;
-            -webkit-text-fill-color: #5a6f88;
-            font-size: 13px;
-            margin-left: 6px;
-        }
-
         .status-badge {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 12px;
-            color: #7a8fa5;
-            background: rgba(255, 255, 255, 0.03);
+            display: flex; align-items: center; gap: 8px;
+            font-size: 12px; color: #7a8fa5;
+            background: rgba(255,255,255,0.03);
             padding: 6px 14px 6px 10px;
             border-radius: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255,255,255,0.04);
         }
-
         .status-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
+            width: 7px; height: 7px; border-radius: 50%;
             background: #3fb950;
-            box-shadow: 0 0 10px rgba(63, 185, 80, 0.3);
             animation: pulse-dot 2.2s ease-in-out infinite;
         }
-
         @keyframes pulse-dot {
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.4; transform: scale(0.85); }
         }
-
-        /* ===== 对话日志主体 ===== */
         .log-container {
             flex: 1;
             padding: 8px 32px 16px 32px;
             overflow-y: auto;
-            scroll-behavior: auto;
-            /* 我们手动控制滚动，禁止自动平滑干扰 */
         }
-
-        .log-container::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        .log-container::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        .log-container::-webkit-scrollbar-thumb {
-            background: #2a3340;
-            border-radius: 10px;
-        }
-
-        .log-container::-webkit-scrollbar-thumb:hover {
-            background: #3d4a5a;
-        }
-
-        /* ===== 单条消息 ===== */
+        .log-container::-webkit-scrollbar { width: 4px; }
+        .log-container::-webkit-scrollbar-track { background: transparent; }
+        .log-container::-webkit-scrollbar-thumb { background: #2a3340; border-radius: 10px; }
         .entry {
             display: flex;
             align-items: baseline;
@@ -148,33 +88,19 @@
             padding: 8px 14px;
             margin-bottom: 2px;
             border-radius: 10px;
-            transition: background 0.15s ease;
             font-size: 14px;
             line-height: 1.6;
-            animation: fade-entry 0.25s ease-out;
         }
-
-        .entry:hover {
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        @keyframes fade-entry {
-            0% { opacity: 0; transform: translateY(4px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
+        .entry:hover { background: rgba(255,255,255,0.02); }
         .entry .role-tag {
             flex-shrink: 0;
             min-width: 72px;
             font-weight: 500;
             font-size: 12px;
-            letter-spacing: 0.3px;
             text-transform: uppercase;
             opacity: 0.7;
             padding: 2px 0;
         }
-
-        /* 角色颜色 */
         .role-tag.user { color: #58a6ff; }
         .role-tag.King { color: #f0883e; }
         .role-tag.Recon { color: #3fb950; }
@@ -182,137 +108,72 @@
         .role-tag.Reporter { color: #d2a8ff; }
         .role-tag.TOOL { color: #6b7d93; }
         .role-tag.system { color: #5a6f88; font-style: italic; }
-
-        .entry .msg {
-            flex: 1;
-            word-break: break-word;
-            color: #d4dfe9;
-        }
-
-        .entry .msg .empty-hint {
-            color: #4a5a6a;
-            font-style: italic;
-        }
-
-        /* ===== 空状态 ===== */
-        .empty-state {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            color: #3a4a5a;
-            font-size: 14px;
-            letter-spacing: 0.3px;
+        .entry .msg { flex: 1; word-break: break-word; color: #d4dfe9; }
+        .entry .msg .empty-hint { color: #4a5a6a; font-style: italic; }
+        .entry .msg .expand-btn {
+            color: #58a6ff; cursor: pointer; font-size: 12px; margin-left: 8px;
             user-select: none;
         }
-
-        .empty-state .icon {
-            font-size: 44px;
-            margin-bottom: 16px;
-            opacity: 0.5;
+        .entry .msg .expand-btn:hover { text-decoration: underline; }
+        .empty-state {
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            height: 100%; color: #3a4a5a; font-size: 14px;
         }
-
-        /* ===== 底部输入栏 — 极简，无按钮 ===== */
+        .empty-state .icon { font-size: 44px; margin-bottom: 16px; opacity: 0.5; }
         .footer {
             padding: 0 32px 24px 32px;
             flex-shrink: 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            border-top: 1px solid rgba(255,255,255,0.03);
             padding-top: 18px;
         }
-
         .input-wrap {
-            display: flex;
-            gap: 0;
-            background: rgba(255, 255, 255, 0.03);
+            display: flex; gap: 0;
+            background: rgba(255,255,255,0.03);
             border-radius: 60px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: border 0.2s ease, background 0.2s ease;
+            border: 1px solid rgba(255,255,255,0.05);
             padding: 4px 4px 4px 20px;
             align-items: center;
         }
-
         .input-wrap:focus-within {
-            border-color: rgba(240, 136, 62, 0.25);
-            background: rgba(255, 255, 255, 0.05);
-            box-shadow: 0 0 30px -8px rgba(240, 136, 62, 0.06);
+            border-color: rgba(240,136,62,0.25);
+            background: rgba(255,255,255,0.05);
         }
-
         .input-wrap input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            outline: none;
-            color: #e8edf2;
-            font-size: 14px;
-            font-family: inherit;
-            padding: 12px 0;
-            min-width: 0;
+            flex: 1; background: transparent; border: none; outline: none;
+            color: #e8edf2; font-size: 14px; font-family: inherit;
+            padding: 12px 0; min-width: 0;
         }
-
-        .input-wrap input::placeholder {
-            color: #3f5266;
-            font-weight: 300;
-            letter-spacing: -0.2px;
-        }
-
+        .input-wrap input::placeholder { color: #3f5266; }
         .input-wrap .send-btn {
             background: linear-gradient(135deg, #f0883e, #d97a2e);
-            border: none;
-            border-radius: 40px;
+            border: none; border-radius: 40px;
             padding: 10px 24px;
-            font-size: 13px;
-            font-weight: 500;
-            color: #0a0c0f;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-            font-family: inherit;
-            letter-spacing: 0.2px;
-            box-shadow: 0 4px 16px rgba(240, 136, 62, 0.15);
+            font-size: 13px; font-weight: 500; color: #0a0c0f;
+            cursor: pointer; font-family: inherit;
+            box-shadow: 0 4px 16px rgba(240,136,62,0.15);
         }
-
         .input-wrap .send-btn:hover {
             transform: scale(1.02);
-            background: linear-gradient(135deg, #f59a4e, #e08030);
-            box-shadow: 0 6px 24px rgba(240, 136, 62, 0.25);
+            box-shadow: 0 6px 24px rgba(240,136,62,0.25);
         }
-
-        .input-wrap .send-btn:active {
-            transform: scale(0.97);
-        }
-
-        /* ===== 响应式 ===== */
         @media (max-width: 640px) {
             body { padding: 12px; }
             .app { max-height: none; height: 96vh; border-radius: 24px; }
-            .header { padding: 18px 20px 12px 20px; flex-wrap: wrap; gap: 10px; }
+            .header { padding: 18px 20px 12px 20px; flex-wrap: wrap; }
             .log-container { padding: 4px 16px 12px 16px; }
             .footer { padding: 0 16px 18px 16px; }
             .entry { font-size: 13px; gap: 10px; padding: 6px 10px; flex-wrap: wrap; }
             .entry .role-tag { min-width: 56px; font-size: 11px; }
-            .input-wrap { padding-left: 14px; }
-            .input-wrap input { font-size: 13px; padding: 10px 0; }
-            .input-wrap .send-btn { padding: 8px 16px; font-size: 12px; }
-            .title { font-size: 15px; }
-        }
-
-        @media (max-width: 400px) {
-            .entry { flex-direction: column; gap: 2px; align-items: flex-start; }
-            .entry .role-tag { min-width: auto; }
         }
     </style>
 </head>
 <body>
-
 <div class="app">
-    <!-- 头部 -->
     <div class="header">
         <div class="header-left">
             <div class="logo-icon">⚔</div>
-            <div class="title">
-                RuwoScan
-            </div>
+            <div class="title">RuwoScan</div>
         </div>
         <div class="status-badge">
             <span class="status-dot"></span>
@@ -320,131 +181,170 @@
             <span style="color:#4a5a6a;margin-left:4px;" id="logCount">0</span>
         </div>
     </div>
-
-    <!-- 对话流 -->
     <div class="log-container" id="logContainer">
-        <div class="empty-state" id="emptyState">
-            <div class="icon">🜁</div>
-            <div>王座空悬 · 等待第一条指令</div>
-        </div>
+        <div class="empty-state"><div class="icon">🜁</div><div>等待指令</div></div>
     </div>
-
-    <!-- 底部输入 — 只有发送，无多余按钮 -->
     <div class="footer">
         <div class="input-wrap">
-            <input type="text" id="cmdInput" placeholder="下达指令..." autocomplete="off" />
+            <input type="text" id="cmdInput" placeholder="输入指令..." autocomplete="off" />
             <button class="send-btn" id="sendBtn">发送</button>
         </div>
     </div>
 </div>
-
 <script>
-    const container = document.getElementById('logContainer');
-    const cmdInput = document.getElementById('cmdInput');
-    const sendBtn = document.getElementById('sendBtn');
-    const logCountEl = document.getElementById('logCount');
-    let lastLogCount = 0;
-    let isUserScrolled = false;
+    (function() {
+        const container = document.getElementById('logContainer');
+        const cmdInput = document.getElementById('cmdInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const logCountEl = document.getElementById('logCount');
 
-    function escapeHtml(text) {
-        if (typeof text !== 'string') text = String(text);
-        const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
-        return text.replace(/[&<>"']/g, function(m) { return map[m]; });
-    }
+        // 记录上一次日志条数，用于增量更新
+        let lastLogCount = 0;
 
-    function createEntryHtml(log) {
-        const role = log.role || 'system';
-        const content = log.content || '';
-        const roleClass = role.replace(/[^a-zA-Z]/g, '');
-        const displayContent = content || '<span class="empty-hint">（空）</span>';
-        return `<div class="entry"><span class="role-tag ${roleClass}">${role}</span><span class="msg">${escapeHtml(displayContent)}</span></div>`;
-    }
-
-    function fullRender(logs) {
-        if (!logs || logs.length === 0) {
-            container.innerHTML = `<div class="empty-state" id="emptyState"><div class="icon">🜁</div><div>王座空悬 · 等待第一条指令</div></div>`;
-            return;
+        function escapeHtml(text) {
+            if (typeof text !== 'string') text = String(text);
+            const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
         }
-        let html = '';
-        for (const log of logs) {
-            html += createEntryHtml(log);
+
+        function safeString(value) {
+            if (value === null || value === undefined) return '';
+            if (typeof value === 'string') return value;
+            try {
+                return JSON.stringify(value);
+            } catch {
+                return String(value);
+            }
         }
-        container.innerHTML = html;
-        container.scrollTop = container.scrollHeight;
-    }
 
-    function fetchLogs() {
-        fetch('/logs')
-            .then(r => r.json())
-            .then(data => {
-                const logs = data.logs || [];
-                const total = logs.length;
-                logCountEl.textContent = total;
+        function toggleContent(id) {
+            const preview = document.getElementById(id + '_preview');
+            const full = document.getElementById(id + '_full');
+            const btn = document.getElementById(id + '_btn');
+            if (full.style.display === 'none') {
+                full.style.display = 'inline';
+                preview.style.display = 'none';
+                btn.textContent = '[收起]';
+            } else {
+                full.style.display = 'none';
+                preview.style.display = 'inline';
+                btn.textContent = '[展开]';
+            }
+        }
 
-                if (total === 0) {
-                    if (lastLogCount !== 0) {
+        function createEntryHtml(log) {
+            const role = log.role || 'system';
+            const rawContent = safeString(log.content);
+            const roleClass = role.replace(/[^a-zA-Z]/g, '');
+            const fullContent = escapeHtml(rawContent);
+            const isLong = rawContent.length > 300;
+            const enableExpand = (role === 'TOOL' && isLong);
+
+            if (enableExpand) {
+                const previewText = escapeHtml(rawContent.slice(0, 300));
+                const id = 'msg_' + Math.random().toString(36).substr(2, 8);
+                return `<div class="entry">
+                            <span class="role-tag ${roleClass}">${role}</span>
+                            <span class="msg">
+                                <span id="${id}_preview">${previewText}...</span>
+                                <span id="${id}_full" style="display:none;">${fullContent}</span>
+                                <span class="expand-btn" id="${id}_btn" onclick="toggleContent('${id}')">[展开]</span>
+                            </span>
+                        </div>`;
+            } else {
+                return `<div class="entry">
+                            <span class="role-tag ${roleClass}">${role}</span>
+                            <span class="msg">${fullContent || '<span class="empty-hint">（空）</span>'}</span>
+                        </div>`;
+            }
+        }
+
+        function fullRender(logs) {
+            if (!logs || logs.length === 0) {
+                container.innerHTML = `<div class="empty-state"><div class="icon">🜁</div><div>等待指令</div></div>`;
+                return;
+            }
+            let html = '';
+            for (const log of logs) {
+                html += createEntryHtml(log);
+            }
+            container.innerHTML = html;
+        }
+
+        function fetchLogs() {
+            fetch('/logs')
+                .then(r => r.json())
+                .then(data => {
+                    const logs = data.logs || [];
+                    const total = logs.length;
+                    logCountEl.textContent = total;
+
+                    // 判断当前是否在底部（允许 20px 误差）
+                    const atBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 20;
+
+                    // 如果总数变为 0，清空显示
+                    if (total === 0) {
+                        if (lastLogCount !== 0) {
+                            fullRender(logs);
+                            lastLogCount = 0;
+                        }
+                        return;
+                    }
+
+                    // 首次加载或总数减少（可能清空后重新加载，或手动清空）
+                    if (lastLogCount === 0 || total < lastLogCount) {
                         fullRender(logs);
-                        lastLogCount = 0;
+                        lastLogCount = total;
+                        if (atBottom) {
+                            container.scrollTop = container.scrollHeight;
+                        }
+                        return;
                     }
-                    return;
-                }
 
-                // 首次加载或清空后
-                if (lastLogCount === 0 || total < lastLogCount) {
-                    fullRender(logs);
-                    lastLogCount = total;
-                    return;
-                }
-
-                // 新增消息
-                if (total > lastLogCount) {
-                    const newLogs = logs.slice(lastLogCount);
-                    let html = '';
-                    for (const log of newLogs) {
-                        html += createEntryHtml(log);
+                    // 增量更新：总条数增加
+                    if (total > lastLogCount) {
+                        const newLogs = logs.slice(lastLogCount);
+                        let html = '';
+                        for (const log of newLogs) {
+                            html += createEntryHtml(log);
+                        }
+                        container.insertAdjacentHTML('beforeend', html);
+                        lastLogCount = total;
+                        // 如果之前在底部，滚动到底部
+                        if (atBottom) {
+                            container.scrollTop = container.scrollHeight;
+                        }
                     }
-                    container.insertAdjacentHTML('beforeend', html);
-                    lastLogCount = total;
-                    // 如果用户没有上滚，自动到底
-                    if (!isUserScrolled) {
-                        container.scrollTop = container.scrollHeight;
-                    }
-                }
-            })
-            .catch(() => {});
-    }
+                })
+                .catch(() => {});
+        }
 
-    // 发送指令
-    function sendCommand() {
-        const cmd = cmdInput.value.trim();
-        if (!cmd) return;
-        fetch('/command', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ command: cmd })
-        }).then(() => {
-            cmdInput.value = '';
-            isUserScrolled = false;
-            // 延迟拉取，让后端有时间写入
-            setTimeout(fetchLogs, 300);
-            setTimeout(fetchLogs, 800);
+        function sendCommand() {
+            const cmd = cmdInput.value.trim();
+            if (!cmd) return;
+            fetch('/command', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ command: cmd })
+            }).then(() => {
+                cmdInput.value = '';
+                // 命令发送后立即拉取新日志（增量更新）
+                fetchLogs();
+            });
+        }
+
+        cmdInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') { e.preventDefault(); sendCommand(); }
         });
-    }
+        sendBtn.addEventListener('click', sendCommand);
 
-    // 滚动检测
-    container.addEventListener('scroll', function() {
-        const atBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 20;
-        isUserScrolled = !atBottom;
-    });
+        window.toggleContent = toggleContent;
 
-    cmdInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') { e.preventDefault(); sendCommand(); }
-    });
-    sendBtn.addEventListener('click', sendCommand);
-
-    // 初始加载
-    fetchLogs();
-    setInterval(fetchLogs, 2000);
+        // 初始加载
+        fetchLogs();
+        // 每 3 秒自动刷新（增量更新）
+        setInterval(fetchLogs, 3000);
+    })();
 </script>
 </body>
 </html>

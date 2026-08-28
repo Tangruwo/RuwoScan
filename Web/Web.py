@@ -1,45 +1,68 @@
 from flask import Flask, render_template, jsonify, request
 import json
+import os
 import webbrowser
 
 app = Flask(__name__)
-LOG_FILE = "../prompts/ruwoscan.log"
 
-def get_logs(limit=100):
+# 获取当前文件所在目录的绝对路径
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+LOG_FILE = os.path.join(BASE_DIR, "..", "prompts", "ruwoscan.log")
+CMD_FILE = os.path.join(BASE_DIR, "..", "prompts", "command.txt")
+
+
+def get_logs(limit=200):
     logs = []
     try:
         with open(LOG_FILE, "r", encoding="utf-8") as f:
-            for line in f.readlines()[-limit:]:
+            lines = f.readlines()
+            for line in lines[-limit:]:
                 if line.strip():
                     try:
                         logs.append(json.loads(line))
                     except:
                         pass
-    except:
+    except FileNotFoundError:
+        # 日志文件还没生成，忽略
         pass
+    except Exception as e:
+        print(f"读取日志出错: {e}")
     return logs
+
 
 @app.route("/")
 def index():
     return render_template("index.html")
 
+
 @app.route("/logs")
 def logs():
     return jsonify({"logs": get_logs()})
+
 
 @app.route("/command", methods=["POST"])
 def command():
     cmd = request.get_json().get("command", "")
     if cmd:
-        with open("prompts/command.txt", "w", encoding="utf-8") as f:
-            f.write(cmd)
+        try:
+            with open(CMD_FILE, "w", encoding="utf-8") as f:
+                f.write(cmd)
+        except Exception as e:
+            return jsonify({"status": "error", "msg": str(e)})
     return jsonify({"status": "ok"})
+
 
 @app.route("/clear", methods=["POST"])
 def clear():
-    open(LOG_FILE, "w", encoding="utf-8").close()
+    try:
+        open(LOG_FILE, "w", encoding="utf-8").close()
+    except:
+        pass
     return jsonify({"status": "ok"})
 
+
 if __name__ == "__main__":
+    # 只在主进程中打开浏览器（避免 debug 模式下重复打开）
+    if os.environ.get("WERKZEUG_RUN_MAIN") == "true":
+        webbrowser.open("http://127.0.0.1:5000")
     app.run(host="0.0.0.0", port=5000, debug=True)
-    webbrowser.open("127.0.0.1:5000")
