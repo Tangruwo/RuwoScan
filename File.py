@@ -76,12 +76,16 @@ def getConfig(): # 从config文件中获取配置文件
 
             return config
 
-def clearFile(): # 清一下文件
+def initFile(): # 清一下文件
     files = [
         "prompts/ruwoscan.log",
         "prompts/King.log",
         "prompts/battle.log"
     ]
+    
+    with open("w","prompts/ruwoscan.log") as file:
+        file.write()
+
     for i in files:
         with open(i,"w",encoding="utf-8") as flie:
             flie.write("")
