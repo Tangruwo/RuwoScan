@@ -1,7 +1,7 @@
 # 代码写的很唐谢谢看哈
 
 from openai import OpenAI
-from File import getConfig,clearFile
+from File import getConfig,clearFile,saveLog
 from Agent import Agent
 # rich
 from rich.console import Console
@@ -32,22 +32,22 @@ if __name__ == "__main__":
 
     console.print(Panel("[bold cyan]RuwoScan[/] - AI 漏洞扫描工具", subtitle="[i]唐如我[/i]"))
     KingReport = input("ruwoScan>") # 哈哈,这段有点想笑
-
+    saveLog("prompts/ruwoscan.log","user",KingReport)
     # 创建智能体
-    King = Agent(name="King",path="prompts/Default/kingResponse.txt",client=client,memoryLimit=30)
-    Recon = Agent(name="Recon",path="prompts/Default/recon.txt",client=client,memoryLimit=30)
-    Attacker = Agent(name="Attacker",path="prompts/Default/attacker.txt",client=client,memoryLimit=30)
+    King = Agent(name="King", path="prompts/Default/kingResponse.txt", client=client, memoryLimit=30, toolMapName="King")
+    Recon = Agent(name="Recon", path="prompts/Default/recon.txt", client=client, memoryLimit=30, toolMapName="Common")
+    Attacker = Agent(name="Attacker", path="prompts/Default/attacker.txt", client=client, memoryLimit=30, toolMapName="Common")
 
-    Reporter = Agent(name="Reporter",path="prompts/Default/reporter.txt",client=client,memoryLimit=30)
+    Reporter = Agent(name="Reporter", path="prompts/Default/reporter.txt", client=client, memoryLimit=30, toolMapName="Common")
 
     # 探测资产
-    print("🎯 探测资产中...")
+    print("🎯 信息收集中...")
     for i in range(14):
 
         ReconReport = Recon.think("prompts/ruwoscan.log","King",KingReport) # 探测 assistant
         KingReport = King.think("prompts/ruwoscan.log","Recon",ReconReport) # 指明方向
 
-        if "切换下一阶段" in KingReport:
+        if KingReport == "switchPhases":
             break
         
     # 渗透测试(气死我了昨天修了这么久bug结果是api的问题www2026.8.26)
@@ -56,7 +56,7 @@ if __name__ == "__main__":
         AttackerReport = Attacker.think("prompts/ruwoscan.log","King",KingReport)
         KingReport = King.think("prompts/ruwoscan.log","Attacker",AttackerReport)
 
-        if "切换下一阶段" in KingReport:
+        if KingReport == "switchPhases":
             break
 
     # 总结报告
