@@ -1,7 +1,7 @@
 # 代码写的很唐谢谢看哈
 
 from openai import OpenAI
-from File import getConfig,clearFile,saveLog
+from File import getConfig,initFile,saveLog
 from Agent import Agent
 # rich
 from rich.console import Console
@@ -9,7 +9,7 @@ from rich.panel import Panel
 
 
 if __name__ == "__main__":
-    clearFile()
+    initFile()
 
     config = getConfig()
 

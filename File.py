@@ -82,9 +82,9 @@ def initFile(): # 清一下文件
         "prompts/King.log",
         "prompts/battle.log"
     ]
-    
-    with open("w","prompts/ruwoscan.log") as file:
-        file.write()
+
+    with open("prompts/ruwoscan.log","w") as file:
+        file.write("")
 
     for i in files:
         with open(i,"w",encoding="utf-8") as flie:
