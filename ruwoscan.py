@@ -42,7 +42,7 @@ if __name__ == "__main__":
 
     # 探测资产
     print("🎯 信息收集中...")
-    for i in range(14):
+    for i in range(24):
 
         ReconReport = Recon.think("prompts/ruwoscan.log","King",KingReport) # 探测 assistant
         KingReport = King.think("prompts/ruwoscan.log","Recon",ReconReport) # 指明方向
@@ -52,13 +52,13 @@ if __name__ == "__main__":
         
     # 渗透测试(气死我了昨天修了这么久bug结果是api的问题www2026.8.26)
     print("⚔️ 渗透测试中...")
-    for i in range(14):
+    for i in range(24):
         AttackerReport = Attacker.think("prompts/ruwoscan.log","King",KingReport)
         KingReport = King.think("prompts/ruwoscan.log","Attacker",AttackerReport)
 
         if KingReport == "switchPhases":
             break
-
+    
     # 总结报告
     print("📝 总结报告中")
     print(Reporter.think("prompts/ruwoscan.log","assistant","请总结报告"))

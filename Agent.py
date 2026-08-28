@@ -35,8 +35,12 @@ class Agent: # 智能体基类
         )
 
         if path != '': # 否则不记录
-            # saveLog(path=path,diaName=diaName,Content=diaContent) # 将对话者内容写入日志
-            saveLog(path=path, diaName=self.name, Content=response.choices[0].message.content) # 将ai输出写入内容
+            content = response.choices[0].message.content
+            if diaContent == content:
+                saveLog(path=path,diaName=diaName,Content=diaContent) # 将对话者内容写入日志
+                saveLog(path=path, diaName=self.name, Content=response.choices[0].message.content) # 将ai输出写入内容
+            else:
+                saveLog(path=path, diaName=self.name, Content=content) # 将ai输出写入内容
 
         # 使用tooL
         toolCalls = response.choices[0].message.tool_calls

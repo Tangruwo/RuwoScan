@@ -175,7 +175,6 @@ def setRequests(url, method="GET", headers=None, data=None, params=None, timeout
 def switchPhases():
     return "switchPhases"
 
-
 commonToolsMap = {
     "readFile": readFile,
     "createFile": createFile,
