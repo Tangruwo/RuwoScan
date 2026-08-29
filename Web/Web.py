@@ -1,3 +1,5 @@
+# 这里是ai写的，就是省心哈，就是核心部分不敢给它，怕看不懂哈
+
 from flask import Flask, render_template, jsonify, request
 import json
 import os
@@ -8,7 +10,7 @@ app = Flask(__name__)
 # 获取当前文件所在目录的绝对路径
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 LOG_FILE = os.path.join(BASE_DIR, "..", "prompts", "ruwoscan.log")
-CMD_FILE = os.path.join(BASE_DIR, "..", "prompts", "command.txt")
+CMD_FILE = os.path.join(BASE_DIR, "..", "prompts", "ruwoscan.log")
 
 
 def get_logs(limit=200):
@@ -23,10 +25,9 @@ def get_logs(limit=200):
                     except:
                         pass
     except FileNotFoundError:
-        # 日志文件还没生成，忽略
         pass
     except Exception as e:
-        print(f"读取日志出错: {e}")
+        print(e)
     return logs
 
 
@@ -62,7 +63,7 @@ def clear():
 
 
 if __name__ == "__main__":
-    # 只在主进程中打开浏览器（避免 debug 模式下重复打开）
-    if os.environ.get("WERKZEUG_RUN_MAIN") == "true":
+
+    if os.environ.get("WERKZEUG_RUN_MAIN") == "true":# 只在主进程中打开浏览器
         webbrowser.open("http://127.0.0.1:5000")
     app.run(host="0.0.0.0", port=5000, debug=True)

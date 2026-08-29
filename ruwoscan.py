@@ -6,7 +6,11 @@ from Agent import Agent
 # rich
 from rich.console import Console
 from rich.panel import Panel
+import time
+import argparse
 
+parser = argparse.ArgumentParser(description="RuwoScan AI漏洞扫描工具")
+                    
 
 if __name__ == "__main__":
     initFile()
@@ -31,8 +35,12 @@ if __name__ == "__main__":
     '''
 
     console.print(Panel("[bold cyan]RuwoScan[/] - AI 漏洞扫描工具", subtitle="[i]唐如我[/i]"))
+
+
+
     KingReport = input("ruwoScan>") # 哈哈,这段有点想笑
     saveLog("prompts/ruwoscan.log","user",KingReport)
+
     # 创建智能体
     King = Agent(name="King", path="prompts/Default/kingResponse.txt", client=client, memoryLimit=30, toolMapName="King")
     Recon = Agent(name="Recon", path="prompts/Default/recon.txt", client=client, memoryLimit=30, toolMapName="Common")

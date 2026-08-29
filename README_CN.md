@@ -33,6 +33,7 @@
 - **上手门槛低** 无需安全背景,克隆即用，全程交互式配置
 - **自动化高** 从信息收集到漏洞验证,全程由指挥官带领多个智能体自动完成
 - **ai自动结束任务** AI自行判断进入下一个阶段,防止未达成指标
+- **Web端可视化** 操作简单，过程可验证，全程透明
 
 ---
 
@@ -41,6 +42,7 @@
 ### 安装
 ``` bash
 git clone https://github.com/chen18924/RuwoScan
+cd RuwoScan-main
 pip install -r requirements.txt
 
 ```
@@ -48,10 +50,10 @@ pip install -r requirements.txt
 ### 启动
 ``` bash
 python ruwoscan.py
-没有检测到apiKey,请输入: your-api-key
-没有检测到bashUrl,请输入: https://....
-没有检测到model,请输入: your-chat
-文件已储存到config.json,注意保密
+>> 没有检测到apiKey,请输入: your-api-key
+>> 没有检测到bashUrl,请输入: https://....
+>> 没有检测到model,请输入: your-chat
+>> 文件已储存到config.json,注意保密
 
 ```
 
