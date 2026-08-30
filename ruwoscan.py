@@ -45,11 +45,13 @@ if __name__ == "__main__":
 
     if args.web:
         threading.Thread(target=Web.run,daemon=True).start()
+        print("host: http://127.0.0.1:5000")
+        webbrowser.open("http://127.0.0.1:5000")
+
         while True:
             file = getLog("prompts/ruwoscan.log")
             try:
                 KingReport = file[0]["content"]
-                webbrowser.open("http://127.0.0.1:5000")
                 break
             except:
                 time.sleep(1)
@@ -63,11 +65,13 @@ if __name__ == "__main__":
     Recon = Agent(name="Recon", path="prompts/Default/recon.txt", client=client, memoryLimit=30, toolMapName="Common")
     Attacker = Agent(name="Attacker", path="prompts/Default/attacker.txt", client=client, memoryLimit=30, toolMapName="Common")
 
+
     Reporter = Agent(name="Reporter", path="prompts/Default/reporter.txt", client=client, memoryLimit=30, toolMapName="Common")
+    DetReporter = Agent(name="DetReporter", path="prompts/Default/detReporter.txt", client=client, memoryLimit=30, toolMapName="Common")
 
     # 探测资产
     print("🎯 信息收集中...")
-    for i in range(24):
+    for i in range(34):
 
         ReconReport = Recon.think("prompts/ruwoscan.log","King",KingReport) # 探测 assistant
         KingReport = King.think("prompts/ruwoscan.log","Recon",ReconReport) # 指明方向
@@ -77,7 +81,7 @@ if __name__ == "__main__":
         
     # 渗透测试(气死我了昨天修了这么久bug结果是api的问题www2026.8.26)
     print("⚔️ 渗透测试中...")
-    for i in range(24):
+    for i in range(34):
         AttackerReport = Attacker.think("prompts/ruwoscan.log","King",KingReport)
         KingReport = King.think("prompts/ruwoscan.log","Attacker",AttackerReport)
 
@@ -86,5 +90,11 @@ if __name__ == "__main__":
     
     # 总结报告
     print("📝 总结报告中")
-    print(Reporter.think("prompts/ruwoscan.log","assistant","请总结报告"))
+    print(Reporter.think("prompts/ruwoscan.log","assistant","请总结报告")) # 简略报告
+
+    # 详细报告生成
+    reporterFilePath = "bugReport/" + time.time
+    with open(reporterFilePath,"w") as file:
+        file.write(DetReporter.think("prompts/detReporter.log","user","请总结报告"))
+    print(f"详细报告地址: {reporterFilePath}")
     

@@ -48,8 +48,18 @@ pip install -r requirements.txt
 ```
 
 ### 启动
+普通启动：
 ``` bash
 python ruwoscan.py
+>> 没有检测到apiKey,请输入: your-api-key
+>> 没有检测到bashUrl,请输入: https://....
+>> 没有检测到model,请输入: your-chat
+>> 文件已储存到config.json,注意保密
+
+```
+Web启动：
+``` bash
+python ruwoscan.py -web
 >> 没有检测到apiKey,请输入: your-api-key
 >> 没有检测到bashUrl,请输入: https://....
 >> 没有检测到model,请输入: your-chat
