@@ -4,8 +4,10 @@ from flask import Flask, render_template, jsonify, request
 import json
 import os
 import webbrowser
+from File import saveLog
 
 app = Flask(__name__)
+webStarted = False
 
 # 获取当前文件所在目录的绝对路径
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -46,8 +48,7 @@ def command():
     cmd = request.get_json().get("command", "")
     if cmd:
         try:
-            with open(CMD_FILE, "w", encoding="utf-8") as f:
-                f.write(cmd)
+            saveLog("prompts/ruwoscan.log","user",cmd)
         except Exception as e:
             return jsonify({"status": "error", "msg": str(e)})
     return jsonify({"status": "ok"})
@@ -62,8 +63,10 @@ def clear():
     return jsonify({"status": "ok"})
 
 
-if __name__ == "__main__":
-
-    if os.environ.get("WERKZEUG_RUN_MAIN") == "true":# 只在主进程中打开浏览器
-        webbrowser.open("http://127.0.0.1:5000")
-    app.run(host="0.0.0.0", port=5000, debug=True)
+def run():
+    global webStarted
+    if webStarted == True:
+        return 
+        
+    app.run(host="0.0.0.0", port=5000, debug=False)
+    webStarted = True

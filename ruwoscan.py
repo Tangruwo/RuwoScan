@@ -1,16 +1,22 @@
 # 代码写的很唐谢谢看哈
 
 from openai import OpenAI
-from File import getConfig,initFile,saveLog
+from File import getConfig,initFile,saveLog,getLog
 from Agent import Agent
 # rich
 from rich.console import Console
 from rich.panel import Panel
+from Web import Web
+
+import threading
 import time
 import argparse
+import webbrowser
 
 parser = argparse.ArgumentParser(description="RuwoScan AI漏洞扫描工具")
-                    
+parser.add_argument("-web",action="store_true",help="开启网页端调试")
+
+args = parser.parse_args()
 
 if __name__ == "__main__":
     initFile()
@@ -37,9 +43,20 @@ if __name__ == "__main__":
     console.print(Panel("[bold cyan]RuwoScan[/] - AI 漏洞扫描工具", subtitle="[i]唐如我[/i]"))
 
 
-
-    KingReport = input("ruwoScan>") # 哈哈,这段有点想笑
-    saveLog("prompts/ruwoscan.log","user",KingReport)
+    if args.web:
+        threading.Thread(target=Web.run,daemon=True).start()
+        while True:
+            file = getLog("prompts/ruwoscan.log")
+            try:
+                KingReport = file[0]["content"]
+                webbrowser.open("http://127.0.0.1:5000")
+                break
+            except:
+                time.sleep(1)
+                
+    else:
+        KingReport = input("ruwoScan>") # 哈哈,这段有点想笑
+        saveLog("prompts/ruwoscan.log","user",KingReport)
 
     # 创建智能体
     King = Agent(name="King", path="prompts/Default/kingResponse.txt", client=client, memoryLimit=30, toolMapName="King")
