@@ -129,6 +129,8 @@ kingTools = [
 
 ]
 
+session = requests.Session()
+
 def readFile(path):
     try:
         with open(path,"r") as f:
@@ -148,11 +150,11 @@ def createFile(path,content):
 
 def setRequests(url, method="GET", headers=None, data=None, params=None, timeout=10,verify=False): # 发送 HTTP 请求
     try:
+
         headers = json.loads(headers) if headers else {}
-        data = json.loads(data) if data else None
         params = json.loads(params) if params else None
 
-        response = requests.request(
+        response = session.request(
             method=method.upper(),
             url=url,
             headers=headers,
@@ -200,9 +202,17 @@ def getTool(toolStr):
 
 def executeTool(toolCall,name):
     toolsMap = toolMapRead.get(name)[0]
-
     funcName = toolCall.function.name
-    arguments = json.loads(toolCall.function.arguments)
+    print("收到参数:", toolCall.function.arguments)
+    # arguments = json.loads(toolCall.function.arguments)
+
+    # 解决 Expecting value: line 1 column 1 (char 0)
+    argsStr = toolCall.function.arguments
+    if argsStr is None or argsStr.strip() == "":
+        arguments = {}
+    else:
+        arguments = json.loads(argsStr)
+    
     func = toolsMap.get(funcName)
     if func:
         return func(**arguments)

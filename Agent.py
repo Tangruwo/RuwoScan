@@ -50,7 +50,7 @@ class Agent: # 智能体基类
                 toolReturn = executeTool(toolCall=toolCall, name=self.toolMapName)
                 if toolReturn == "switchPhases":
                     return "switchPhases"
-                    
+                
                 toolReturns += str(toolReturn)
                 saveLog(path=path,diaName="TOOL",Content=toolReturn)
             # 第二次思考,总结调用结果
