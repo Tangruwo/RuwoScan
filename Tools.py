@@ -154,6 +154,9 @@ def setRequests(url, method="GET", headers=None, data=None, params=None, timeout
         headers = json.loads(headers) if headers else {}
         params = json.loads(params) if params else None
 
+        # print("[Session Cookie]", session.cookies.get_dict())
+        # print("[POST Data]", data)
+        
         response = session.request(
             method=method.upper(),
             url=url,
@@ -203,7 +206,7 @@ def getTool(toolStr):
 def executeTool(toolCall,name):
     toolsMap = toolMapRead.get(name)[0]
     funcName = toolCall.function.name
-    print("收到参数:", toolCall.function.arguments)
+    
     # arguments = json.loads(toolCall.function.arguments)
 
     # 解决 Expecting value: line 1 column 1 (char 0)

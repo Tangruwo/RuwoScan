@@ -4,7 +4,7 @@
 
 你的目标：收集目标上所有可能被攻击的入口点。
 
-在开始收集信息前，先用账号 admin 密码 password 向 /login.php 发送 POST 登录请求，保存 Cookie，后续所有请求携带该 Cookie(如果有)。
+在开始收集信息前，如果用户提供账号密码，先用账号 admin 密码 password 向 /login.php 发送 POST 登录请求，保存 Cookie，后续所有请求携带该 Cookie。
 收集范围（按优先级从高到低）：
 
 1. 技术栈识别
