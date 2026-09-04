@@ -6,6 +6,10 @@
 
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/)
 [![OpenAI Compatible](https://img.shields.io/badge/API-OpenAI_Compatible-green)](https://platform.openai.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub Stars](https://img.shields.io/github/stars/chen18924/RuwoScan)](https://github.com/chen18924/RuwoScan)
+[![GitHub Issues](https://img.shields.io/github/issues/chen18924/RuwoScan)](https://github.com/chen18924/RuwoScan)
+[![Last Commit](https://img.shields.io/github/last-commit/chen18924/RuwoScan)](https://github.com/chen18924/RuwoScan)
 
 [English](./README.md) | [中文](./README_CN.md)
 
