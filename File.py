@@ -1,5 +1,7 @@
 # 就是唐,不想写注释了
 import json
+import sys
+import os
 
 def saveLog(path,diaName,Content): # 保存日志
     try:
@@ -9,8 +11,9 @@ def saveLog(path,diaName,Content): # 保存日志
             }
             
             log.write(json.dumps(wMess, ensure_ascii=False) + "\n")
-    except:
-        print(">> Error: saveLog error")
+    except FileNotFoundError as e:
+        print("文件不存在:", path, e)
+        sys.exit(1)
 
 def getLog(path): # 读取日志
     try:
@@ -31,9 +34,13 @@ def getLog(path): # 读取日志
                         
                     data.append({"role": "user", "content": content})
         return data
-    except Exception as e:
-        print(">> Error: getLog error",e)
+    except FileNotFoundError as e:
+        print("文件不存在:", path,e)
         return []
+
+    except Exception as e:
+        print("错误:",e)
+        sys.exit(1)
 
 def getConfig(): # 从config文件中获取配置文件
     try:
@@ -59,7 +66,7 @@ def getConfig(): # 从config文件中获取配置文件
                 config = json.load(f)
                 return config
 
-    except: # 呜呜太可恶了竟然乱删我的东西(17.14好了现在不上传啦)
+    except FileNotFoundError: # 呜呜太可恶了竟然乱删我的东西(17.14好了现在不上传啦)
         with open("config.json","w",encoding="utf-8") as f: # 复制还能水一点代码,酣畅淋漓
             apiKey = input(">>没有检测到apiKey,请输入: ")
             bashUrl = input(">>没有检测到bashUrl,请输入: ")
@@ -75,19 +82,34 @@ def getConfig(): # 从config文件中获取配置文件
             f.seek(0)
 
             return config
+        
+    except Exception as e:
+        print("错误:",e)
+        sys.exit(1)
 
-def initFile(): # 清一下文件
-    files = [
+
+def initFile(): # 初始化文件
+    filesPath = [
         "prompts/ruwoscan.log",
         "prompts/King.log",
         "prompts/battle.log"
     ]
 
-    with open("prompts/ruwoscan.log","w") as file:
-        file.write("")
+    dirsPath = [
+        "bugReport"
+    ]
 
-    for i in files:
-        with open(i,"w",encoding="utf-8") as flie:
-            flie.write("")
-                   
+    try:
+        # 文件初始化
+        for file in filesPath:
+            with open(file,"w",encoding="utf-8") as file:
+                file.write("")
+
+        # 文件夹初始化
+        for dir in dirsPath:
+            os.makedirs(dir, exist_ok=True)
+
+    except Exception as e:
+        print("初始化失败:", e)
+        sys.exit(1)
         

@@ -1,7 +1,8 @@
 # 
-from openai import OpenAI
+from openai import OpenAI, APIConnectionError, APIStatusError, APITimeoutError, RateLimitError
 from File import getConfig,getLog,saveLog
 from Tools import *
+import sys
 
 class Agent: # 智能体基类
     def __init__(self, name: str, path, client, memoryLimit: int, toolMapName: str): # 初始化哈哈 
@@ -13,8 +14,8 @@ class Agent: # 智能体基类
         try:
             with open(path,"r",encoding='utf-8') as f:
                 self.prompt = f.read()
-        except:
-            print(">> Error: Agent no file")
+        except FileNotFoundError as e:
+            print("提示词文件不存在:", path,e)
 
         # saveLog(path="ruwoscan.log",diaName=self.name,Content=self.prompt)
 
@@ -30,16 +31,42 @@ class Agent: # 智能体基类
                 memoryNHtool.append(memory)
         self.memory = memoryNHtool[-self.memoryLimit:] if len(memoryNHtool) >self.memoryLimit else memoryNHtool
 
-        response = self.client.chat.completions.create(
-            model = config["model"],
-            messages = [
-                {"role": "system", "content": self.prompt}
-            ] + self.memory + [
-                {"role": "user", "content": diaContent}
-            ],
-            stream=False,
-            tools=getTool(self.toolMapName)
-        )
+        try:
+            response = self.client.chat.completions.create(
+                model = config["model"],
+                messages = [
+                    {"role": "system", "content": self.prompt}
+                ] + self.memory + [
+                    {"role": "user", "content": diaContent}
+                ],
+                stream=False,
+                tools=getTool(self.toolMapName)
+            )
+        except (APIConnectionError, APITimeoutError, RateLimitError): # 三次连接失败退出
+            errorNumber = 1
+            while True:
+                try:
+
+                    response = self.client.chat.completions.create(
+                        model = config["model"],
+                        messages = [
+                            {"role": "system", "content": self.prompt}
+                        ] + self.memory + [
+                            {"role": "user", "content": diaContent}
+                        ],
+                        stream=False,
+                        tools=getTool(self.toolMapName)
+                    )
+
+                    break
+
+                except (APIConnectionError, TimeoutError, RateLimitError) as e: 
+                    errorNumber += 1
+                    if errorNumber >= 2:
+                        print("API三次无法连接",e)
+                        sys.exit(1)
+
+
 
         if path != '': # 否则不记录
             content = response.choices[0].message.content
@@ -61,18 +88,42 @@ class Agent: # 智能体基类
                 toolReturns += str(toolReturn)
                 saveLog(path=path,diaName="TOOL",Content=toolReturn)
             # 第二次思考,总结调用结果
-            response = self.client.chat.completions.create(
-                model = config["model"],
-                messages = [
-                    {"role": "system", "content": self.prompt}
-                ] + self.memory + [
-                    {"role": "user", "content": "工具结果:"}
-                ] + [
-                    {"role": "user", "content": toolReturns}
-                ],
-                stream=False,
-            )
-            saveLog(path=path, diaName=self.name, Content=response.choices[0].message.content)
+            try:
+
+                response = self.client.chat.completions.create(
+                    model = config["model"],
+                    messages = [
+                        {"role": "system", "content": self.prompt}
+                    ] + self.memory + [
+                        {"role": "user", "content": "工具结果:"}
+                    ] + [
+                        {"role": "user", "content": toolReturns}
+                    ],
+                    stream=False,
+                )
+                saveLog(path=path, diaName=self.name, Content=response.choices[0].message.content)
+            except (APIConnectionError, TimeoutError, RateLimitError):
+                errorNumber = 1
+                while True:
+                    try:
+                        response = self.client.chat.completions.create(
+                            model = config["model"],
+                            messages = [
+                                {"role": "system", "content": self.prompt}
+                            ] + self.memory + [
+                                {"role": "user", "content": "工具结果:"}
+                            ] + [
+                                {"role": "user", "content": toolReturns}
+                            ],
+                            stream=False,
+                        )
+                        break
+
+                    except (APIConnectionError, TimeoutError, RateLimitError) as e: 
+                        errorNumber += 1
+                        if errorNumber >= 2:
+                            print("API三次无法连接",e)
+                            sys.exit(1)
 
         if response.choices[0].message.content: # 没调用tool直接返回结果
             return response.choices[0].message.content

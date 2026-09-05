@@ -12,6 +12,13 @@ import threading
 import time
 import argparse
 import webbrowser
+import os
+import keyboard
+
+def keyInterruptExit():
+    print("\n")
+    os._exit(0)
+
 
 parser = argparse.ArgumentParser(description="RuwoScan AI漏洞扫描工具")
 parser.add_argument("-web",action="store_true",help="开启网页端调试")
@@ -19,6 +26,7 @@ parser.add_argument("-web",action="store_true",help="开启网页端调试")
 args = parser.parse_args()
 
 if __name__ == "__main__":
+
     initFile()
 
     config = getConfig()
@@ -28,8 +36,11 @@ if __name__ == "__main__":
         base_url = config["bashUrl"]
     )
 
-    # rich的
+    # rich的类
     console = Console()
+
+    keyboard.add_hotkey('ctrl+q', keyInterruptExit)
+
 
     '''
     垃圾话---
@@ -42,7 +53,6 @@ if __name__ == "__main__":
 
     console.print(Panel("[bold cyan]RuwoScan[/] - AI 漏洞扫描工具", subtitle="[i]唐如我[/i]"))
 
-
     if args.web:
         threading.Thread(target=Web.run,daemon=True).start()
         print("host: http://127.0.0.1:5000")
@@ -53,7 +63,7 @@ if __name__ == "__main__":
             try:
                 KingReport = file[0]["content"]
                 break
-            except:
+            except (IndexError, KeyError, TypeError):
                 time.sleep(1)
                 
     else:
@@ -69,6 +79,8 @@ if __name__ == "__main__":
     Reporter = Agent(name="Reporter", path="prompts/Default/reporter.txt", client=client, memoryLimit=30, toolMapName="Common")
     DetReporter = Agent(name="DetReporter", path="prompts/Default/detReporter.txt", client=client, memoryLimit=30, toolMapName="Common")
 
+    time.sleep(0.3)
+    
     # 探测资产
     print("🎯 信息收集中...")
     for i in range(34):
@@ -91,12 +103,11 @@ if __name__ == "__main__":
     # 总结报告
     print("📝 总结报告中")
 
+    reporterFilePath = "bugReport/" + str(int(time.time())) + ".txt" # 文件名
+    DetReporterReport = DetReporter.think("prompts/ruwoscan.log","user","请总结报告")
     # 详细报告生成
-    reporterFilePath = "bugReport/" + str(int(time.time()) + ".txt") # 文件名
-    DetReporterReport = DetReporter.think("prompts/detReporter.log","user","请总结报告")
     print(Reporter.think("prompts/ruwoscan.log","user","根据该报告总结简略漏洞报告:"+DetReporterReport)) # 简略报告
 
     with open(reporterFilePath,"w") as file:
         file.write(DetReporterReport)
     print(f"\n详细报告地址: {reporterFilePath}")
-    
