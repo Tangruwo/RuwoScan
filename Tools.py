@@ -168,9 +168,13 @@ def setRequests(url, method="GET", headers=None, data=None, params=None, timeout
         )
 
         return {
+            "request_url": url,
+            "request_method": method,
+            "request_params": params,
+            "request_data": data,
             "status_code": response.status_code,
             "headers": dict(response.headers),
-            "body": response.text[:2000],  # 限制长度，防止爆内存
+            "body": response.text,
             "length": len(response.text)
         }
     

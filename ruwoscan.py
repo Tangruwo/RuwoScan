@@ -90,13 +90,13 @@ if __name__ == "__main__":
     
     # 总结报告
     print("📝 总结报告中")
-    reporterFilePath = "bugReport/" + int(time.time) # 文件名
 
     # 详细报告生成
+    reporterFilePath = "bugReport/" + str(int(time.time()) + ".txt") # 文件名
     DetReporterReport = DetReporter.think("prompts/detReporter.log","user","请总结报告")
-    print(Reporter.think("prompts/ruwoscan.log","user","根据该报告总结简略漏洞报告:"+DetReporter)) # 简略报告
+    print(Reporter.think("prompts/ruwoscan.log","user","根据该报告总结简略漏洞报告:"+DetReporterReport)) # 简略报告
 
     with open(reporterFilePath,"w") as file:
         file.write(DetReporterReport)
-    print(f"详细报告地址: {reporterFilePath}")
+    print(f"\n详细报告地址: {reporterFilePath}")
     

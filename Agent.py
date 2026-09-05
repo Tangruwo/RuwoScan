@@ -21,7 +21,14 @@ class Agent: # 智能体基类
     def think(self,path,diaName,diaContent) -> str: # 路径,名,内容
         config = getConfig()
 
-        self.memory = getLog(path)
+        # 上下文处理, 这一步应该是优化tokens消耗大头了，主要就是限制上下文长度
+        memoryFull = getLog(path)
+        memoryNHtool = []
+        for memory in memoryFull:
+            memoryRole = memory.get("role")
+            if memoryRole != "TOOL":
+                memoryNHtool.append(memory)
+        self.memory = memoryNHtool[-self.memoryLimit:] if len(memoryNHtool) >self.memoryLimit else memoryNHtool
 
         response = self.client.chat.completions.create(
             model = config["model"],
@@ -59,7 +66,7 @@ class Agent: # 智能体基类
                 messages = [
                     {"role": "system", "content": self.prompt}
                 ] + self.memory + [
-                    {"role": "user", "content": "这是工具结果,请进行总结分析:"}
+                    {"role": "user", "content": "工具结果:"}
                 ] + [
                     {"role": "user", "content": toolReturns}
                 ],
@@ -73,6 +80,5 @@ class Agent: # 智能体基类
 
     def clearMemory():
         pass
-
 
 
