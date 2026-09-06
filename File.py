@@ -96,7 +96,8 @@ def initFile(): # 初始化文件
     ]
 
     dirsPath = [
-        "bugReport"
+        "bugReport",
+        "Downloads"
     ]
 
     try:
