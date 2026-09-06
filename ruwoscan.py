@@ -20,7 +20,12 @@ def keyInterruptExit():
     os._exit(0)
 
 
-parser = argparse.ArgumentParser(description="RuwoScan AI漏洞扫描工具")
+parser = argparse.ArgumentParser(description='''RuwoScan AI漏洞扫描工具
+Ctrl+Q结束程序
+'''
+,formatter_class=argparse.RawDescriptionHelpFormatter
+)
+
 parser.add_argument("-web",action="store_true",help="开启网页端调试")
 
 args = parser.parse_args()
