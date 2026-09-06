@@ -22,7 +22,6 @@
 [**`Features`**](#features)
 [**`Quick Start`**](#quick-start)
 [**`Usage`**](#usage)
-[**`Project Structure & Analysis`**](#project-structure--analysis)
 
 ---
 
