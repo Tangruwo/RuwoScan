@@ -1,6 +1,8 @@
 import json
 import requests
 import urllib3
+import os
+import subprocess
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning) # 去掉那烦人信息
 
@@ -58,6 +60,24 @@ commonTools = [
             }
         }
     },
+    {
+        "type": "function",
+        "function": {
+            "name": "runPython",
+            "description": "执行 .py 文件，返回执行结果。用于计算、数据处理、构造 payload 等场景。",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "path": {
+                        "type": "string",
+                        "description": "要执行的 Python 文件路径"
+                    }
+                },
+                "required": ["path"]
+            }
+        }
+    }
+    
 
 ]
 
@@ -125,6 +145,23 @@ kingTools = [
                 "type": "object"
             }
         }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "runPython",
+            "description": "执行 .py 文件，返回执行结果。用于计算、数据处理、构造 payload 等场景。",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "path": {
+                        "type": "string",
+                        "description": "要执行的 Python 文件路径"
+                    }
+                },
+                "required": ["path"]
+            }
+        }
     }
 
 ]
@@ -133,7 +170,13 @@ session = requests.Session()
 
 def readFile(path):
     try:
-        with open(path,"r") as f:
+        baseDir = os.path.join(os.getcwd(), "Downloads")
+        fullPath = os.path.join(baseDir, path)
+
+        if not os.path.abspath(fullPath).startswith(os.path.abspath(baseDir)):
+            return f"无权访问{path}, 只能访问Downloads下的文件"
+
+        with open(fullPath,"r") as f:
             return f.read()
 
     except Exception as e:
@@ -141,7 +184,12 @@ def readFile(path):
 
 def createFile(path,content):
     try:
-        with open(path,"w") as f:
+        baseDir = os.path.join(os.getcwd(), "Downloads")
+        fullPath = os.path.join(baseDir, path)
+    
+        if not os.path.abspath(fullPath).startswith(os.path.abspath(baseDir)):
+            return f"无权访问{path}, 只能访问Downloads下的文件"
+        with open(fullPath,"w") as f:
             f.write(content)
 
             return "创建成功"
@@ -184,17 +232,40 @@ def setRequests(url, method="GET", headers=None, data=None, params=None, timeout
 def switchPhases():
     return "switchPhases"
 
+def runPython(path: str) -> str:
+    try:
+        baseDir = os.path.join(os.getcwd(), "Downloads")
+        fullPath = os.path.join(baseDir, path)
+        if not os.path.abspath(fullPath).startswith(os.path.abspath(baseDir)):
+            return f"无权访问{path}, 只能访问Downloads下的文件"
+        
+        result = subprocess.run(
+            ["python", fullPath],
+            capture_output=True,
+            text=True,
+            timeout=30
+        )
+        output = result.stdout
+        if result.stderr:
+            output += "\n[stderr]\n" + result.stderr
+        return output
+    except Exception as e:
+        return str(e)
+    
 commonToolsMap = {
     "readFile": readFile,
     "createFile": createFile,
-    "setRequests": setRequests
+    "setRequests": setRequests,
+    "runPython": runPython
 }
 
 kingToolMap = {
     "readFile": readFile,
     "createFile": createFile,
     "setRequests": setRequests,
-    "switchPhases": switchPhases
+    "switchPhases": switchPhases,
+    "runPython": runPython
+
 }
 
 toolMapRead ={
