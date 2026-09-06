@@ -4,7 +4,7 @@
 
 # RuwoScan
 
-> *AI*漏洞扫描工具
+> *漏洞会为见到我而颤抖不已*
 
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/)
 [![OpenAI Compatible](https://img.shields.io/badge/API-OpenAI_Compatible-green)](https://platform.openai.com)
@@ -88,11 +88,13 @@ python ruwoscan.py -web
 ---
 
 ## 使用
+使用终端直接使用：
 ``` bash
 python ruwoscan.py
 RuwoScan> 对http://localhost/pikachu/index.php进行黑盒测试
 
 ```
+
 
 ---
 
