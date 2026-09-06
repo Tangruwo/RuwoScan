@@ -216,10 +216,10 @@ def setRequests(url, method="GET", headers=None, data=None, params=None, timeout
         )
 
         return {
-            "request_url": url,
-            "request_method": method,
-            "request_params": params,
-            "request_data": data,
+            "url": url,
+            "method": method,
+            "params": params,
+            "data": data,
             "status_code": response.status_code,
             "headers": dict(response.headers),
             "body": response.text,
@@ -292,7 +292,10 @@ def executeTool(toolCall,name):
         arguments = json.loads(argsStr)
     
     func = toolsMap.get(funcName)
-    if func:
-        return func(**arguments)
-    else:
-        return f"没有工具: {funcName}"
+    try:
+        if func:
+            return func(**arguments)
+        else:
+            return f"没有工具: {funcName}"
+    except Exception as e:
+        return str(e)

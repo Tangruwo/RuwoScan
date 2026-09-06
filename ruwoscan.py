@@ -113,6 +113,6 @@ if __name__ == "__main__":
     # 详细报告生成
     print(Reporter.think("prompts/ruwoscan.log","user","根据该报告总结简略漏洞报告:"+DetReporterReport)) # 简略报告
 
-    with open(reporterFilePath,"w") as file:
+    with open(reporterFilePath,"w", encoding="utf-8") as file:
         file.write(DetReporterReport)
     print(f"\n详细报告地址: {reporterFilePath}")
