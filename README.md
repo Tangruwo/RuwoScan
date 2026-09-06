@@ -1,6 +1,6 @@
 <div align="center">
 
-<img scr="images/logo/logoZ.png" width="120" height="120" alt="RuwoScan">
+<img src="images/logo/logoZ.png" width="120" height="120" alt="RuwoScan">
 
 # RuwoScan
 
@@ -10,8 +10,6 @@
 [![OpenAI Compatible](https://img.shields.io/badge/API-OpenAI_Compatible-green)](https://platform.openai.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![GitHub Stars](https://img.shields.io/github/stars/chen18924/RuwoScan)](https://github.com/chen18924/RuwoScan)
-[![GitHub Issues](https://img.shields.io/github/issues/chen18924/RuwoScan)](https://github.com/chen18924/RuwoScan)
-[![Last Commit](https://img.shields.io/github/last-commit/chen18924/RuwoScan)](https://github.com/chen18924/RuwoScan)
 
 [English](./README_EN.md) | [中文](./README.md)
 
