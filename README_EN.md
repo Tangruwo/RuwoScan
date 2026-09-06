@@ -1,4 +1,3 @@
-```bash
 <div align="center">
 
 <img src="images/logo/logoZ.png" width="120" height="120" alt="RuwoScan">
@@ -19,7 +18,7 @@
 ---
 
 ## Table of Contents
-[**`Overview`**](#overview)
+[**`One-sentence introduction`**](#one-sentence-introduction)
 [**`Features`**](#features)
 [**`Quick Start`**](#quick-start)
 [**`Usage`**](#usage)
@@ -27,29 +26,28 @@
 
 ---
 
-## Overview
-An automated AI vulnerability scanning tool built on an Agentic framework.
+## One-sentence introduction
+An automated AI vulnerability scanning tool based on an Agentic framework.
 
 ---
 
 ## Features
-- **Multi‑Agent Collaboration** Commander (sets direction), Scout (information gathering), Attacker (vulnerability testing & verification), Reporter (report generation)
-- **Complete Toolchain** Equips the AI with a full ecosystem of tools: file operations, HTTP requests, directory scanning, and more
-- **Phased Penetration** AI penetration is divided into phases with a standardized process (Reconnaissance → Exploitation → Report Generation)
-- **Dynamic Completion Assessment** Based on attack surface coverage and vulnerability findings, the AI autonomously decides whether to advance to the next phase
-- **Python Support** The AI can autonomously invoke and run Python programs
-- **Structured Reports** Automatically generates Markdown reports containing vulnerability types, locations, and remediation recommendations
-- **Natural Language** Interact using natural language—no need to memorize complex commands
-- **Web Visualization** Simple to operate, process is verifiable, fully transparent
-- **Low Barrier to Entry** No security background required—clone and use immediately
-
+- **Multi-agent collaboration** Commander (sets direction), Scout (information gathering), Attacker (vulnerability testing and verification), Reporter (generates reports)
+- **Complete toolchain** Equips AI with a full toolkit: file operations, HTTP requests, directory scanning, etc.
+- **Phased penetration** AI penetration is phased and standardized (Reconnaissance -> Penetration -> Report generation)
+- **Dynamic completion assessment** Based on attack surface coverage and vulnerability discovery, AI autonomously decides whether to proceed to the next phase
+- **Python support** AI autonomously calls and runs Python programs
+- **Structured reports** Automatically generates Markdown reports including vulnerability type, location, and remediation suggestions
+- **Natural language** Natural language interaction, no need to remember complex commands
+- **Web visualization** Simple operation, verifiable process, fully transparent
+- **Low barrier to entry** No security background required, clone and use immediately
 ---
 
 ## Quick Start
 
 ### Installation
-Three steps (can be copied directly)
-1. Star the repo ⭐
+Three steps (copy directly)
+1. Star ⭐
 2. Clone the repository
 3. Install dependencies
 
@@ -57,42 +55,39 @@ Three steps (can be copied directly)
 git clone https://github.com/chen18924/RuwoScan
 cd RuwoScan-main
 pip install -r requirements.txt
+
 ```
 
-### Project Configuration
-Configuration is prompted automatically during the process—no additional setup required.
 
+
+### Project Configuration
+The process automatically prompts for configuration; no additional setup required
 ``` bash
 python ruwoscan.py
 >> No apiKey detected, please enter: your-api-key
 >> No bashUrl detected, please enter: https://....
 >> No model detected, please enter: your-chat
->> File saved to config.json, keep it confidential
-```
+>> File saved to config.json, keep it secure
 
 ---
 
 ## Usage
 Start directly from the terminal:
-
 ``` bash
 python ruwoscan.py
-RuwoScan> Perform black-box testing on http://localhost/pikachu/index.php
+RuwoScan> Perform a black-box test on http://localhost/pikachu/index.php
+
 ```
+![Terminal startup](images/终端演示.png)
 
-![Terminal Launch](images/terminal-demo.png)
-
-Launch Web UI from the terminal:
-
+Start the web interface from the terminal:
 ``` bash
 python ruwoscan.py -web
+
 ```
-
-![Terminal Launch](images/web-demo.png)
-
+![Terminal startup](images/Web演示.png)
 ---
 
 ## Project Structure & Analysis
 
 ---
-```
