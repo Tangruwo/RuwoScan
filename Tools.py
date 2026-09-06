@@ -44,7 +44,7 @@ commonTools = [
         "type": "function",
         "function": {
             "name": "setRequests",
-            "description": "发送 HTTP 请求，支持 GET/POST/PUT/DELETE,返回状态码、响应头和正文",
+            "description": "发送单个 HTTP 请求，支持 GET/POST/PUT/DELETE,返回状态码、响应头和正文，如需多个请求，请分多次调用",
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -119,7 +119,7 @@ kingTools = [
         "type": "function",
         "function": {
             "name": "setRequests",
-            "description": "发送 HTTP 请求，支持 GET/POST/PUT/DELETE,返回状态码、响应头和正文",
+            "description": "发送单个 HTTP 请求，支持 GET/POST/PUT/DELETE,返回状态码、响应头和正文，如需多个请求，请分多次调用",
             "parameters": {
                 "type": "object",
                 "properties": {

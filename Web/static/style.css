@@ -34,16 +34,15 @@ body {
 }
 .header-left { display: flex; align-items: center; gap: 14px; }
 .logo-icon {
-    width: 32px; height: 32px;
-    background: linear-gradient(135deg, #f0883e, #d26b2a);
-    border-radius: 8px;
+    width: 32px;
+    height: 32px;
+    /* background: linear-gradient(135deg, #f0883e, #d26b2a); 删掉这行 */
+    /* border-radius: 8px; 如果图片是方的，也可以删掉 */
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 700;
-    font-size: 16px;
-    color: #0a0c0f;
-    box-shadow: 0 4px 12px rgba(240,136,62,0.25);
+    /* font-weight: 700; font-size: 16px; color: #0a0c0f; 如果没有文字，这些也删掉 */
+    /* box-shadow: 0 4px 12px rgba(240,136,62,0.25); 阴影也可以去掉 */
 }
 .title { font-size: 18px; font-weight: 500; color: #e8edf2; }
 .status-badge {
