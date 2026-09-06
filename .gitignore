@@ -10,3 +10,5 @@ __pycache__/
 # 日志和临时文件
 *.log
 *.tmp
+
+bugReport/

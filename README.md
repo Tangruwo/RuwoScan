@@ -91,7 +91,7 @@ python ruwoscan.py
 RuwoScan> 对http://localhost/pikachu/index.php进行黑盒测试
 
 ```
-
+[!终端启动](images\终端演示.png)
 
 终端调用Web启动：
 ``` bash

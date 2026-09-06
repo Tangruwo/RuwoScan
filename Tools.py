@@ -168,7 +168,7 @@ kingTools = [
 
 session = requests.Session()
 
-def readFile(path):
+def readFile(path, **kwargs):
     try:
         baseDir = os.path.join(os.getcwd(), "Downloads")
         fullPath = os.path.join(baseDir, path)
@@ -182,7 +182,7 @@ def readFile(path):
     except Exception as e:
         return str(e)
 
-def createFile(path,content):
+def createFile(path,content, **kwargs):
     try:
         baseDir = os.path.join(os.getcwd(), "Downloads")
         fullPath = os.path.join(baseDir, path)
@@ -196,7 +196,7 @@ def createFile(path,content):
     except Exception as e:
         return str(e)
 
-def setRequests(url, method="GET", headers=None, data=None, params=None, timeout=10,verify=False): # 发送 HTTP 请求
+def setRequests(url, method="GET", headers=None, data=None, params=None, timeout=10,verify=False, **kwargs): # 发送 HTTP 请求
     try:
 
         headers = json.loads(headers) if headers else {}
@@ -229,10 +229,10 @@ def setRequests(url, method="GET", headers=None, data=None, params=None, timeout
     except Exception as e:
         return str(e)
     
-def switchPhases():
+def switchPhases(**kwargs):
     return "switchPhases"
 
-def runPython(path: str) -> str:
+def runPython(path: str, **kwargs) -> str:
     try:
         baseDir = os.path.join(os.getcwd(), "Downloads")
         fullPath = os.path.join(baseDir, path)
