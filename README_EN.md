@@ -86,8 +86,6 @@ python ruwoscan.py -web
 
 ```
 ![Terminal startup](images/Web演示.png)
----
-
-## Project Structure & Analysis
 
 ---
+

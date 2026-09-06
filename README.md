@@ -86,8 +86,5 @@ python ruwoscan.py -web
 
 ```
 ![终端启动](images/Web演示.png)
----
-
-## 项目结构及分析
 
 ---
