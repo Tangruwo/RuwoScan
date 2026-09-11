@@ -1,7 +1,7 @@
 # 
 from openai import OpenAI, APIConnectionError, APIStatusError, APITimeoutError, RateLimitError
 from File import getConfig,getLog,saveLog
-from Tools import *
+from Tools.ToolMain import *
 import sys
 
 class Agent: # 智能体基类

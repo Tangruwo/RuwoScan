@@ -80,9 +80,9 @@ if __name__ == "__main__":
     Recon = Agent(name="Recon", path="prompts/Default/recon.txt", client=client, memoryLimit=30, toolMapName="Common")
     Attacker = Agent(name="Attacker", path="prompts/Default/attacker.txt", client=client, memoryLimit=30, toolMapName="Common")
 
-
-    Reporter = Agent(name="Reporter", path="prompts/Default/reporter.txt", client=client, memoryLimit=30, toolMapName="Common")
-    DetReporter = Agent(name="DetReporter", path="prompts/Default/detReporter.txt", client=client, memoryLimit=30, toolMapName="Common")
+    # 两个报告总结
+    Reporter = Agent(name="Reporter", path="prompts/Default/reporter.txt", client=client, memoryLimit=100, toolMapName="Common")
+    DetReporter = Agent(name="DetReporter", path="prompts/Default/detReporter.txt", client=client, memoryLimit=100, toolMapName="Common")
 
     time.sleep(0.3)
     
@@ -90,18 +90,20 @@ if __name__ == "__main__":
     print("🎯 信息收集中...")
     for i in range(34):
 
-        ReconReport = Recon.think("prompts/ruwoscan.log","King",KingReport) # 探测 assistant
+        for i in range(2):
+            ReconReport = Recon.think("prompts/ruwoscan.log","King",KingReport) # 探测 assistant
+        
         KingReport = King.think("prompts/ruwoscan.log","Recon",ReconReport) # 指明方向
-
         if KingReport == "switchPhases":
             break
         
     # 渗透测试(气死我了昨天修了这么久bug结果是api的问题www2026.8.26)
     print("⚔️ 渗透测试中...")
     for i in range(34):
-        AttackerReport = Attacker.think("prompts/ruwoscan.log","King",KingReport)
-        KingReport = King.think("prompts/ruwoscan.log","Attacker",AttackerReport)
+        for i in range(2):
+            AttackerReport = Attacker.think("prompts/ruwoscan.log","King",KingReport)
 
+        KingReport = King.think("prompts/ruwoscan.log","Attacker",AttackerReport)
         if KingReport == "switchPhases":
             break
     
