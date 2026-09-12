@@ -27,17 +27,17 @@
 ---
 
 ## 一句话简介
-基于Agentic 框架的自动化AI漏洞扫描工具。
+基于Agentic 框架的自动化AI漏洞扫描工具
 
 ---
 
 ## 为什么选择RuwoScan?
-核心理念：让 AI ***主导渗透测试***，而不是***辅助扫描***。
+核心理念：让 AI ***主导渗透测试***，而不是***辅助扫描***
 
-传统工具是人定规则、工具执行、AI 可选总结。
+传统工具是人定规则、工具执行、AI 可选总结
 RuwoScan 反过来：AI 自己决定*打哪里*、*怎么打*、*何时停*；*自己发请求*、*验漏洞*、*拿证据*；
 
-AI 是*执行者*，不是*解说员*。
+AI 是*执行者*，不是*解说员*
 
 ---
 
@@ -62,7 +62,7 @@ AI 是*执行者*，不是*解说员*。
 3. 安装依赖
 
 ``` bash
-git clone https://github.com/chen18924/RuwoScan
+git clone https://github.com/Tangruwo/RuwoScan
 cd RuwoScan-main
 pip install -r requirements.txt
 
