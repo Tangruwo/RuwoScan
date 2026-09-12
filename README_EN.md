@@ -62,7 +62,7 @@ Three steps (copy directly)
 3. Install dependencies
 
 ``` bash
-git clone https://github.com/chen18924/RuwoScan
+git clone https://github.com/Tangruwo/RuwoScan
 cd RuwoScan-main
 pip install -r requirements.txt
 
