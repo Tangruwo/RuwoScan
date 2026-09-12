@@ -20,6 +20,7 @@ def keyInterruptExit():
     os._exit(0)
 
 
+
 parser = argparse.ArgumentParser(description='''RuwoScan AI漏洞扫描工具
 Ctrl+Q结束程序
 '''
@@ -77,12 +78,12 @@ if __name__ == "__main__":
 
     # 创建智能体
     King = Agent(name="King", path="prompts/Default/kingResponse.txt", client=client, memoryLimit=30, toolMapName="King")
-    Recon = Agent(name="Recon", path="prompts/Default/recon.txt", client=client, memoryLimit=30, toolMapName="Common")
-    Attacker = Agent(name="Attacker", path="prompts/Default/attacker.txt", client=client, memoryLimit=30, toolMapName="Common")
+    Recon = Agent(name="Recon", path="prompts/Default/recon.txt", client=client, memoryLimit=15, toolMapName="Common")
+    Attacker = Agent(name="Attacker", path="prompts/Default/attacker.txt", client=client, memoryLimit=15, toolMapName="Common")
 
     # 两个报告总结
-    Reporter = Agent(name="Reporter", path="prompts/Default/reporter.txt", client=client, memoryLimit=100, toolMapName="Common")
-    DetReporter = Agent(name="DetReporter", path="prompts/Default/detReporter.txt", client=client, memoryLimit=100, toolMapName="Common")
+    Reporter = Agent(name="Reporter", path="prompts/Default/reporter.txt", client=client, memoryLimit=50, toolMapName="Common")
+    DetReporter = Agent(name="DetReporter", path="prompts/Default/detReporter.txt", client=client, memoryLimit=50, toolMapName="Common")
 
     time.sleep(0.3)
     
