@@ -19,6 +19,7 @@
 
 ## Table of Contents
 [**`One-sentence introduction`**](#one-sentence-introduction)
+[**`Why Choose RuwoScan?`**](#why-choose-ruwoscan)
 [**`Features`**](#features)
 [**`Quick Start`**](#quick-start)
 [**`Usage`**](#usage)
@@ -27,6 +28,16 @@
 
 ## One-sentence introduction
 An automated AI vulnerability scanning tool based on an Agentic framework.
+
+---
+
+## Why Choose RuwoScan?
+Core philosophy: Let AI ***lead penetration testing***, rather than ***assist scanning***.
+
+Traditional tools have humans define rules, tools execute, and AI optionally summarizes.
+RuwoScan flips this: AI decides *where to hit*, *how to hit*, and *when to stop*; *sends requests itself*, *verifies vulnerabilities*, and *collects evidence*;
+
+AI is the *executor*, not the *commentator*.
 
 ---
 
@@ -68,6 +79,7 @@ python ruwoscan.py
 >> No model detected, please enter: your-chat
 >> File saved to config.json, keep it secure
 
+```
 ---
 
 ## Usage
@@ -87,4 +99,3 @@ python ruwoscan.py -web
 ![Terminal startup](images/Web演示.png)
 
 ---
-
