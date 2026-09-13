@@ -35,9 +35,10 @@ An automated AI vulnerability scanning tool based on an Agentic framework.
 Core philosophy: Let AI ***lead penetration testing***, rather than ***assist scanning***.
 
 Traditional tools have humans define rules, tools execute, and AI optionally summarizes.
+
 RuwoScan flips this: AI decides *where to hit*, *how to hit*, and *when to stop*; *sends requests itself*, *verifies vulnerabilities*, and *collects evidence*;
 
-AI is the *executor*, not the *commentator*.
+*AI is the **executor**, not the **commentator***.
 
 ---
 
