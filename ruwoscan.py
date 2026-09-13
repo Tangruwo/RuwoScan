@@ -116,7 +116,7 @@ if __name__ == "__main__":
     reporterFilePath = "bugReport/" + str(int(time.time())) + ".txt" # 文件名
     DetReporterReport = DetReporter.think("prompts/ruwoscan.log","user",f"请根据用户语言总结报告,用户语言: {userInput}")
     # 详细报告生成
-    print(Reporter.think("prompts/ruwoscan.log","user","根据该报告总结简略漏洞报告:"+DetReporterReport)) # 简略报告
+    print(Reporter.think("prompts/ruwoscan.log","user","根据该报告总结简略漏洞报告:"+str(DetReporterReport))) # 简略报告
 
     with open(reporterFilePath,"w", encoding="utf-8") as file:
         file.write(DetReporterReport)

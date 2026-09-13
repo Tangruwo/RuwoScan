@@ -23,5 +23,3 @@ Description: [Describe the core issue and potential impact in 1-2 sentences.]
 No vulnerabilities found at this time...
 
 !!! Output only the vulnerability report itself. Do not add any extra sections.
-
-Always respond in English, regardless of the target's language.

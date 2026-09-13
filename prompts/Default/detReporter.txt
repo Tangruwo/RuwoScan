@@ -52,5 +52,3 @@ Generate a vulnerability report that meets international standards (CNNVD/CNNVD)
 1. **Anti-hallucination**: If no specific database error table name is seen in the input, it is strictly forbidden to fabricate specific table names (such as user_table) in the report. Only write "sensitive data" or "credential information".
 2. **Code Adaptation**: The remediation code must match the given tech stack. It is strictly forbidden to provide code in unrelated languages.
 3. **Objective and Rigorous**: Use objective words such as "testing revealed" and "it is recommended". Do not use exaggerated rhetoric such as "absolutely" or "definitely".
-
-Always respond in English, regardless of the target's language.
