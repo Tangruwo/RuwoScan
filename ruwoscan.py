@@ -67,13 +67,15 @@ if __name__ == "__main__":
         while True:
             file = getLog("prompts/ruwoscan.log")
             try:
-                KingReport = file[0]["content"]
+                userInput = file[0]["content"]
+                KingReport = userInput
                 break
             except (IndexError, KeyError, TypeError):
                 time.sleep(1)
                 
     else:
-        KingReport = input("ruwoScan>") # 哈哈,这段有点想笑
+        userInput = input("ruwoScan>") # 哈哈,这段有点想笑
+        KingReport = userInput
         saveLog("prompts/ruwoscan.log","user",KingReport)
 
     # 创建智能体
@@ -112,7 +114,7 @@ if __name__ == "__main__":
     print("📝 总结报告中")
 
     reporterFilePath = "bugReport/" + str(int(time.time())) + ".txt" # 文件名
-    DetReporterReport = DetReporter.think("prompts/ruwoscan.log","user","请总结报告")
+    DetReporterReport = DetReporter.think("prompts/ruwoscan.log","user",f"请根据用户语言总结报告,用户语言: {userInput}")
     # 详细报告生成
     print(Reporter.think("prompts/ruwoscan.log","user","根据该报告总结简略漏洞报告:"+DetReporterReport)) # 简略报告
 
