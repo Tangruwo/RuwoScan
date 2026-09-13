@@ -132,23 +132,30 @@ def getTool(toolStr):
     return tool[1]
 
 def executeTool(toolCall,name): # 导入时使用
-    toolsMap = toolMapRead.get(name)[0]
-    funcName = toolCall.function.name
-    
-    # arguments = json.loads(toolCall.function.arguments)
-
-    # 解决 Expecting value: line 1 column 1 (char 0)
-    argsStr = toolCall.function.arguments
-    if argsStr is None or argsStr.strip() == "":
-        arguments = {}
-    else:
-        arguments = json.loads(argsStr)
-    
-    func = toolsMap.get(funcName)
     try:
-        if func:
-            return func(**arguments)
+        toolsMap = toolMapRead.get(name)[0]
+        funcName = toolCall.function.name
+        
+        # arguments = json.loads(toolCall.function.arguments)
+
+        # 解决 Expecting value: line 1 column 1 (char 0)
+        argsStr = toolCall.function.arguments
+        if argsStr is None or argsStr.strip() == "":
+            arguments = {}
         else:
-            return f"没有工具: {funcName}"
+            arguments = json.loads(argsStr)
+        
+        func = toolsMap.get(funcName)
+        try:
+            if func:
+                return func(**arguments)
+            else:
+                return f"没有工具: {funcName}"
+        except Exception as e:
+            return str(e)
+        
     except Exception as e:
+        with open("debug.log", "a", encoding="utf-8") as bug:
+            bug.write(f"{str(e)}, {toolCall}, {name}\n")
+            
         return str(e)
