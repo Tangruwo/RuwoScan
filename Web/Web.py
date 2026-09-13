@@ -18,7 +18,7 @@ LOG_FILE = os.path.join(BASE_DIR, "..", "prompts", "ruwoscan.log")
 CMD_FILE = os.path.join(BASE_DIR, "..", "prompts", "ruwoscan.log")
 
 
-def get_logs(limit=200):
+def get_logs(limit=None):
     logs = []
     try:
         with open(LOG_FILE, "r", encoding="utf-8") as f:
