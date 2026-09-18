@@ -14,11 +14,33 @@ import argparse
 import webbrowser
 import os
 import keyboard
+import json
 
 def keyInterruptExit():
     print("\n")
     os._exit(0)
 
+def setConfig(name: str, Content: str):
+    path = "config.json"
+
+    try:
+        with open(path, "r") as config:
+            configJson: json = json.load(config)
+
+        if configJson.get(name):
+            configJsonName = configJson[name]
+            if configJsonName != "":
+                configJson[name] = Content
+
+        with open(path, "w") as config:  
+            print(1)
+            config.write(json.dumps(configJson, ensure_ascii=False) + "\n")
+
+        return 0
+    except FileNotFoundError as e:
+        with open("debug.log","w") as debug:
+            debug.write(str(e) + "\n")
+        return 1
 
 
 parser = argparse.ArgumentParser(description='''RuwoScan AI漏洞扫描工具
@@ -28,8 +50,29 @@ Ctrl+Q结束程序
 )
 
 parser.add_argument("-web",action="store_true",help="开启网页端调试")
+parser.add_argument("-fast",action="store_true",help="快速测试")
+parser.add_argument("-apiKey", type=str,help="重新设置apiKey")
+parser.add_argument("-bashUrl", type=str,help="重新设置bashUrl")
+parser.add_argument("-model", type=str,help="重新设置model")
 
 args = parser.parse_args()
+
+if args.fast:
+    print("[+] 快速测试模式已开启")
+if args.apiKey or args.bashUrl or args.model:
+    # apiKey
+    if args.apiKey:
+        setConfig("apiKey", args.apiKey)
+        print(f"已经更改apiKey为: {args.apiKey}")
+    # bashUrl
+    if args.bashUrl:
+        setConfig("bashUrl", args.bashUrl)
+        print(f"已经更改bashUrl为: {args.bashUrl}")
+    # model
+    if args.model:
+        setConfig("model", args.model)
+        print(f"已经更改model为: {args.model}")
+
 
 if __name__ == "__main__":
 
@@ -77,6 +120,9 @@ if __name__ == "__main__":
         userInput = input("ruwoScan>") # 哈哈,这段有点想笑
         KingReport = userInput
         saveLog("prompts/ruwoscan.log","user",KingReport)
+    if args.fast:
+        KingReport += "请尽量控制每个阶段于5次以内"
+
 
     # 创建智能体
     King = Agent(name="King", path="prompts/Default/kingResponse.txt", client=client, memoryLimit=30, toolMapName="King")

@@ -92,7 +92,8 @@ def initFile(): # 初始化文件
     filesPath = [
         "prompts/ruwoscan.log",
         "prompts/King.log",
-        "prompts/battle.log"
+        "prompts/battle.log",
+        "debug.log"
     ]
 
     dirsPath = [
